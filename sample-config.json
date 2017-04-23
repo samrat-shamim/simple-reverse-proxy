@@ -1,5 +1,8 @@
 {
-  "sub-domain-1": "http://127.0.0.1:8081",
-  "sub-domain-1": "http://127.0.0.1:8082",
-  "sub-domain-1": "http://127.0.0.1:8083"
+ "mainDomain": "http://127.0.0.1:8080",
+  "subDomains": {
+    "sub-domain-1": "http://127.0.0.1:8081",
+    "sub-domain-2": "http://127.0.0.1:8082",
+    "sub-domain-3": "http://127.0.0.1:8083"
+  }
 }

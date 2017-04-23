@@ -32,15 +32,16 @@ function createProxyServer(configFilePath) {
         return false;
     }
     var configs = {};
-    for (var subDomain in serverData) {
+    var mainDomainServer = serverData.mainDomain;
+    for (var subDomain in serverData.subDomains) {
         configs[subDomain]  = {
-            server:serverData[subDomain],
+            server:serverData.subDomains[subDomain],
             router: express.Router()
         }
     }
 
     for(var subDomain in configs){
-        configs[subDomain].router.get('/', function (req, res) {
+        configs[subDomain].router.get('/*', function (req, res) {
             if(req){
                 var reqSubdomain = req.headers.host.split('.')[0];
                 console.log("Redirecting to " + configs[reqSubdomain].server);
@@ -52,8 +53,9 @@ function createProxyServer(configFilePath) {
     }
 
 
-    app.get('/', function (req, res) {
-        res.send('Homepage');
+    app.get('/*', function (req, res) {
+        console.log("Redirecting to " + mainDomainServer);
+        proxyServer.web(req, res, {target: mainDomainServer});
     });
     app.use(morgan('tiny'));
 
